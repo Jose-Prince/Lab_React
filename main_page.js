@@ -3,7 +3,7 @@ document.body.style.backgroundColor = '#000000'
 document.body.style.height = '99.8%'
 document.body.style.margin = '0'
 document.body.style.padding = '0'
-// document.body.style.overflow = 'hidden';
+document.body.style.overflow = 'hidden';
 
 
 function App() {
@@ -11,11 +11,12 @@ function App() {
         <div style={{
             height: '100%',
             display: 'grid',
-            gridTemplateRows: '50% 45% 5%',
+            gridTemplateRows: '50% 47% 3%',
             border: '1px solid #000000'
         }}>
             <FirstRow />
             <PrimeraFila />
+            <Buttons />
         </div>
     );
 }
@@ -43,21 +44,15 @@ function PrimeraFila() {
     // Arreglo para almacenar los elementos img
     const imageElements = [];
 
-    var leftp = -50
-    var topp = 20
-
-    var fila = 1
+    var leftp = -237
+    var topp = 115
     
     // Generar elementos img dinámicamente usando un ciclo for
     for (var i = 0; i < 32; i++) {
-        if (i % 8 == 0 && fila == 1 && i != 0) {
-            topp += 20
-            leftp = -50
-        } else if (i % 8 == 0 && fila == 2 && i != 8) {
-            topp += 20
-            leftp = -75
-            fila = 1
-        }
+        if (i % 8 == 0 && i != 0) {
+            topp += 85.7
+            leftp = -237
+        } 
         imageElements.push(
             <img 
                 key={i} 
@@ -67,13 +62,13 @@ function PrimeraFila() {
                     position: 'absolute',
                     top: topp +'px',
                     left: leftp + 'px',
-                    width: '146px', 
-                    height: '150px',
+                    width: '716px', 
+                    height: '720px',
                     margin: '0 0px', // Reducir el espacio entre las imágenes
                 }} 
             />
         );
-        leftp += 48.5
+        leftp += 240
     }
 
     // Renderizar los elementos de las imágenes
@@ -89,12 +84,24 @@ function PrimeraFila() {
 function Screen() {
     return (
        <div style={{
-            height: '75%',
-            width: '80%',
+            height: '90%',
+            width: '50%',
             backgroundColor: 'white',
             filter: 'drop-shadow(0 0 50mm rgb(365, 365, 365))'  //applies shadow
        }}>
        </div> 
+    )
+}
+
+function Buttons() {
+    return(
+        <div style={{
+            height: '100%',
+            width: '99.9%',
+            gridRow: '3',
+            backgroundColor: 'blue',
+            border: '1px solid #ffffff',
+        }}></div>
     )
 }
 
