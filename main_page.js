@@ -7,6 +7,9 @@ document.body.style.overflow = 'hidden';
 
 
 function App() {
+    const [isCreateOpen, setIsCreateOpen] = React.useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
+
     return (
         <div style={{
             height: '100%',
@@ -16,11 +19,12 @@ function App() {
         }}>
             <FirstRow />
             <PrimeraFila />
-            <Buttons />
+            <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
+            {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} /> } 
+            {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} />}
         </div>
     );
 }
-
 
 //Div flex
 function FirstRow() {
@@ -59,7 +63,7 @@ function PrimeraFila() {
                 src={imageSource} 
                 alt={`Imagen ${i + 1}`} 
                 style={{ 
-                    position: 'absolute',
+                    position: 'fixed',
                     top: topp +'px',
                     left: leftp + 'px',
                     width: '716px', 
@@ -93,16 +97,109 @@ function Screen() {
     )
 }
 
-function Buttons() {
+function Buttons({ setIsCreateOpen, setIsDeleteOpen }) {
     return(
         <div style={{
+            position: 'relative',
             height: '100%',
             width: '99.9%',
             gridRow: '3',
-            backgroundColor: 'blue',
+            backgroundColor: 'black',
             border: '1px solid #ffffff',
-        }}></div>
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+        }}>
+            <Create setIsCreateOpen={setIsCreateOpen}/> | <Delete setIsDeleteOpen={setIsDeleteOpen}/>
+        </div>
     )
+}
+
+function Create({ setIsCreateOpen }) {
+    const [isHovered, setIsHovered] = React.useState(false)
+
+    const handleMouseEnter = () => {
+        setIsHovered(true)
+    }
+
+    const handleMouseLeave = () => {
+        setIsHovered(false)
+    }
+
+    const handleCreateClick = () => {
+        setIsCreateOpen(true)
+    }
+
+    return (
+        <button onClick={handleCreateClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                backgroundColor: 'black',
+                border: 'none',
+                color: isHovered ? 'blue' : 'white',
+                fontSize: '20px',
+                cursor: 'pointer'
+        }}>Crear</button>
+    )
+}
+
+
+function Delete({ setIsDeleteOpen }) {
+    const [isHovered, setIsHovered] = React.useState(false)
+
+    const handleMouseEnter = () => {
+        setIsHovered(true)
+    }
+
+    const handleMouseLeave = () => {
+        setIsHovered(false)
+    }
+
+    const handleDeleteClick = () => {
+        setIsDeleteOpen(true)
+    }
+
+    return (
+        <button onClick={handleDeleteClick} 
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+            backgroundColor: 'black',
+            border: 'none',
+            color: isHovered ? 'blue' : 'white',
+            fontSize: '20px',
+            cursor: 'pointer'
+        }}>Eliminar</button>
+    )
+}
+
+function ModalDelete({ onClose }) {
+    return (
+        <div onClick={onClose} style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <div style={{
+                backgroundColor: 'white',
+                padding: '20px',
+                borderRadius: '5px',
+                boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)'
+            }}>
+                <h2>Contenido del modal</h2>
+                <p>Aquí puedes poner cualquier contenido que desees mostrar en el modal.</p>
+                <button onClick={onClose}>Cerrar</button>
+            </div>
+        </div>
+    );
 }
 
 // Renderizar el componente en el DOM
