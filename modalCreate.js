@@ -1,4 +1,35 @@
-function ModalCreate({ onClose }) {
+var title = "" 
+var trailer = ""
+var image = ""
+var content = ""
+
+function ModalCreate({ onClose, addMovie }) {
+
+    const [title, setTitle] = React.useState('')
+    const [trailer, setTrailer] = React.useState('')
+    const [image, setImage] = React.useState('')
+    const [content, setContent] = React.useState('')
+
+    const handleSubmit = async () => {
+        const movieData = {
+            id: await obtainMoviesLen(),
+            title: title,
+            trailer: trailer,
+            image: image,
+            content: content,
+            date: getCurrentDate()
+        };
+        addMovie(movieData);
+        onClose();
+    }
+
+    const getCurrentDate = () => {
+        const date = new Date();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <div style={{
@@ -23,20 +54,19 @@ function ModalCreate({ onClose }) {
                 flexDirection: 'column'
             }}>
                 <h2>Grabando película</h2>
-                <Name />
-                <Trailer />
-                <Image />
-                <Content />
-                <ModalOptions onClose={onClose}/>
+                <Name value={title} handleChange={setTitle}/>
+                <Trailer value={trailer} handleChange={setTrailer}/>
+                <Image value={image} handleChange={setImage}/>
+                <Content value={content} handleChange={setContent}/>
+                <ModalOptions onClose={onClose} handleSubmit={handleSubmit} />
             </div>
         </div>
     );
 }
 
-function Name() {
-
+function Name({ value, handleChange }) {
     return (
-        <div style={{
+        <div id='N' style={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center'
@@ -44,7 +74,9 @@ function Name() {
             <p style={{
                 margin: '50px'
             }}>Título: </p>
-            <input style={{
+            <input type='text' value={value} 
+            onChange={(event) => handleChange(event.target.value)}
+            style={{
                 resize: 'none',
                 height: '30px',
                 width: '700px',
@@ -56,9 +88,10 @@ function Name() {
     )
 }
 
-function Trailer() {
+function Trailer({ value, handleChange }) {
+
     return (
-        <div style={{
+        <div id='T' style={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center'
@@ -66,7 +99,9 @@ function Trailer() {
             <p style={{
                 margin: '50px'
             }}>Trailer: </p>
-            <input style={{
+            <input type='text' value={value}
+            onChange={(event) => handleChange(event.target.value)}
+            style={{
                 resize: 'none',
                 height: '30px',
                 width: '700px',
@@ -78,9 +113,10 @@ function Trailer() {
     )
 }
 
-function Image() {
+function Image({ value, handleChange }) {
+
     return (
-        <div style={{
+        <div id='I' style={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center'
@@ -88,7 +124,9 @@ function Image() {
             <p style={{
                 margin: '50px'
             }}>Imagen: </p>
-            <input style={{
+            <input type='text' value={value}
+            onChange={(event) => handleChange(event.target.value)}
+            style={{
                 resize: 'none',
                 height: '30px',
                 width: '700px',
@@ -100,16 +138,19 @@ function Image() {
     )
 }
 
-function Content() {
+function Content({ value, handleChange }) {
+
     return (
-        <div style={{
+        <div id='C' style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-start',
             flexDirection: 'column'
         }}>
             <p>Contenido: </p>
-            <textarea style={{
+            <textarea type='text' value={value}
+            onChange={(event) => handleChange(event.target.value)}
+            style={{
                 resize: 'none',
                 height: '300px',
                 width: '760px',
@@ -120,7 +161,7 @@ function Content() {
     )
 }
 
-function ModalOptions({ onClose }) {
+function ModalOptions({ onClose, handleSubmit }) {
     return (
         <div style={{
             display: 'flex',
@@ -132,7 +173,7 @@ function ModalOptions({ onClose }) {
                 width: '30%',
                 fontSize: '20px'
             }}>Cerrar</button>
-            <button onClick={onClose} style={{
+            <button onClick={handleSubmit} style={{
                 width: '30%',
                 fontSize: '20px'
             }}>Grabar</button>
@@ -140,4 +181,20 @@ function ModalOptions({ onClose }) {
     )
 }
 
+
+//Async functions
+async function obtainMoviesLen(){
+    const data = await fetch('http://127.0.0.1:3000/posts',
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    console.log('await', data)
+    const blogs = await data.json()
+    console.log(blogs)
+    
+    return blogs.length
+}
 

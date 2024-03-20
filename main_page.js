@@ -5,7 +5,6 @@ document.body.style.margin = '0'
 document.body.style.padding = '0'
 document.body.style.overflow = 'hidden';
 
-
 function App() {
     const [isCreateOpen, setIsCreateOpen] = React.useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
@@ -20,11 +19,13 @@ function App() {
             <FirstRow />
             <PrimeraFila />
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
-            {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} /> } 
+            {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} addMovie={addMovie} /> } 
             {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} />}
         </div>
     );
 }
+
+obtainMovies()
 
 //Div flex
 function FirstRow() {
@@ -61,7 +62,7 @@ function PrimeraFila() {
             <img 
                 key={i} 
                 src={imageSource} 
-                alt={`Imagen ${i + 1}`} 
+                alt={`${i}`} 
                 style={{ 
                     position: 'fixed',
                     top: topp +'px',
@@ -202,10 +203,34 @@ function ModalDelete({ onClose }) {
     );
 }
 
-// Renderizar el componente en el DOM
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-    );
+//Async functions
+async function obtainMovies(){
+    const data = await fetch('http://127.0.0.1:3000/posts',
+    {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    console.log('await', data)
+    const blogs = await data.json()
+    console.log(blogs)
     
+    // Renderizar el componente en el DOM
+    ReactDOM.render(
+        <App blogs={blogs}/>,
+        document.getElementById('root')
+    )
+}
+
+async function addMovie(object){
+    const data = await fetch('http://127.0.0.1:3000/posts',
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(object)
+    })
+}
 
