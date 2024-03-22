@@ -3,11 +3,11 @@ document.body.style.backgroundColor = '#000000'
 document.body.style.height = '99.8%'
 document.body.style.margin = '0'
 document.body.style.padding = '0'
-document.body.style.overflow = 'hidden';
+// document.body.style.overflow = 'hidden';
 
-function App() {
-    const [isCreateOpen, setIsCreateOpen] = React.useState(false);
-    const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
+function App({ blogs }) {
+    const [isCreateOpen, setIsCreateOpen] = React.useState(false)
+    const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
 
     return (
         <div style={{
@@ -20,7 +20,7 @@ function App() {
             <PrimeraFila />
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
             {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} addMovie={addMovie} /> } 
-            {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} />}
+            {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} blogs={blogs}/>}
         </div>
     );
 }
@@ -43,36 +43,64 @@ function FirstRow() {
 }
 
 function PrimeraFila() {
-    // Arreglo con la ruta de la imagen
-    const imageSource = "Seat.svg";
 
+    // Ruta de la imagen
+    const imageSource = "Seat.svg";
+    
     // Arreglo para almacenar los elementos img
     const imageElements = [];
-
+    
     var leftp = -237
     var topp = 115
     
     // Generar elementos img dinámicamente usando un ciclo for
-    for (var i = 0; i < 32; i++) {
+    for (var i = 0; i < 32; i++) {  
+        const [isPopOverVisible, setIsPopoverVisible] = React.useState(false)
+
+        const handleMouseEnter = () => {
+            setIsPopoverVisible(true)
+            console.log('open')
+        }
+    
+        const handleMouseLeave = () => {
+            setIsPopoverVisible(false)
+            console.log('close')
+        }
+        
         if (i % 8 == 0 && i != 0) {
             topp += 85.7
             leftp = -237
         } 
         imageElements.push(
-            <img 
-                key={i} 
-                src={imageSource} 
-                alt={`${i}`} 
-                style={{ 
+            <div>
+                <img 
+                    key={i} 
+                    src={imageSource} 
+                    alt={`${i}`} 
+                    style={{ 
+                        position: 'fixed',
+                        top: topp +'px',
+                        left: leftp + 'px',
+                        width: '716px', 
+                        height: '720px',
+                        margin: '0 0px', // Reducir el espacio entre las imágenes
+                    }} 
+                />
+                <div onMouseOver={handleMouseEnter}
+                onMouseOut={handleMouseLeave} style={{
                     position: 'fixed',
-                    top: topp +'px',
-                    left: leftp + 'px',
-                    width: '716px', 
-                    height: '720px',
-                    margin: '0 0px', // Reducir el espacio entre las imágenes
-                }} 
-            />
-        );
+                    height: '176px',
+                    width: '234px',
+                    top: topp + 373+'px',
+                    left: leftp + 241 +'px',
+                    cursor: 'pointer',
+                    zIndex: '1'
+                }}></div>
+                    {isPopOverVisible && 
+                    (<Information handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} topp={topp} leftp={leftp}/>
+                )}
+            </div>
+        )
         leftp += 240
     }
 
@@ -81,7 +109,7 @@ function PrimeraFila() {
         <div>
             {imageElements}
         </div>
-    );
+    )
 }
 
 
@@ -174,33 +202,6 @@ function Delete({ setIsDeleteOpen }) {
             cursor: 'pointer'
         }}>Eliminar</button>
     )
-}
-
-function ModalDelete({ onClose }) {
-    return (
-        <div onClick={onClose} style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <div style={{
-                backgroundColor: 'white',
-                padding: '20px',
-                borderRadius: '5px',
-                boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)'
-            }}>
-                <h2>Contenido del modal</h2>
-                <p>Aquí puedes poner cualquier contenido que desees mostrar en el modal.</p>
-                <button onClick={onClose}>Cerrar</button>
-            </div>
-        </div>
-    );
 }
 
 //Async functions

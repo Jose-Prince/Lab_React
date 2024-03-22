@@ -41,7 +41,8 @@ function ModalCreate({ onClose, addMovie }) {
             backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            zIndex: '2'
         }}>
             <div style={{
                 backgroundColor: 'white',
