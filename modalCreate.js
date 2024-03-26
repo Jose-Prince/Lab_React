@@ -3,7 +3,7 @@ var trailer = ""
 var image = ""
 var content = ""
 
-function ModalCreate({ onClose, addMovie }) {
+function ModalCreate({ onClose, addMovie, blogs }) {
 
     const [title, setTitle] = React.useState('')
     const [trailer, setTrailer] = React.useState('')
@@ -11,14 +11,14 @@ function ModalCreate({ onClose, addMovie }) {
     const [content, setContent] = React.useState('')
 
     const handleSubmit = async () => {
+        const index = blogs.length
         const movieData = {
-            id: await obtainMoviesLen(),
             title: title,
             trailer: trailer,
             image: image,
             content: content,
             date: getCurrentDate()
-        };
+        }
         addMovie(movieData);
         onClose();
     }

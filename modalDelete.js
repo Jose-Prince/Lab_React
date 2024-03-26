@@ -1,6 +1,6 @@
-function ModalDelete({ onClose, blogs }) {
+function ModalDelete({ onClose, blogs , DeleteMovie}) {
     return (
-        <div onClick={onClose} style={{
+        <div style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -19,59 +19,52 @@ function ModalDelete({ onClose, blogs }) {
                 boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)'
             }}>
                 <h2>Escoja la película a eliminar</h2>
-                <ShowMovies props={blogs}/>
-                <button onClick={onClose}>Cerrar</button>
+                <ShowMovies movies={blogs} onClose={onClose} DeleteMovie={DeleteMovie}/>
             </div>
         </div>
     );
 }
 
-function ShowMovies({ props }) {
+function ShowMovies({ movies, onClose, DeleteMovie }) {
+    const [selectMovie, setSelectMovie] = React.useState('');
 
-    console.log(props)
-
-    const movieElements = [];
-    
-    // Generar elementos img dinámicamente usando un ciclo for
-    for (var i = 0; i < 5; i++) {
-        movieElements.push(
-            <p>
-                Hola
-            </p>
-        )
+    function onValueChange(event) {
+        setSelectMovie(event.target.value);
     }
 
-    // Renderizar los elementos de las imágenes
+    function formSubmit(event) {
+        event.preventDefault();
+        const index = movies.findIndex(movie => movie.title === selectMovie);
+        if (index !== -1) {
+            DeleteMovie(index);
+        }
+        onClose(); // Cerrar el modal después de eliminar la película
+    }
+
+    const movieElements = movies.map((movie, index) => (
+        <p key={index}>
+            <label>
+                <input type='radio' value={movie.title} onChange={onValueChange} /> {movie.title}
+            </label>
+        </p>
+    ));
+
     return (
-        <div>
+        <form onSubmit={formSubmit}>
             {movieElements}
-        </div>
-    )
-}
-
-
-//Async functions
-async function getMovies(){
-    const data = await fetch('http://127.0.0.1:3000/posts',
-    {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    console.log('await', data)
-    const blogs = await data.json()
-    console.log(blogs)
-    return blogs
-    
-}
-
-async function DeleteMovie(id){
-    const data = await fetch('http://127.0.0.1:3000/posts/${id}',
-    {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-evenly'
+            }}>
+                <button onClick={onClose} style={{
+                    width: '30%',
+                    fontSize: '15px'
+                }}>Cerrar</button>
+                <button type='submit' style={{
+                    width: '30%',
+                    fontSize: '15px'
+                }}>Submit</button>
+            </div>
+        </form>
+    );
 }

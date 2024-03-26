@@ -19,8 +19,8 @@ function App({ blogs, len }) {
             <FirstRow />
             <PrimeraFila len={len}/>
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
-            {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} addMovie={addMovie} /> } 
-            {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} blogs={blogs}/>}
+            {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} blogs={blogs} addMovie={addMovie} /> } 
+            {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} blogs={blogs} DeleteMovie={DeleteMovie}/>}
         </div>
     );
 }
@@ -232,3 +232,12 @@ async function addMovie(object){
     })
 }
 
+async function DeleteMovie(id){
+    const data = await fetch(`http://127.0.0.1:3000/posts/${id}`,
+    {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+}
