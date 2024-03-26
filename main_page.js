@@ -5,7 +5,7 @@ document.body.style.margin = '0'
 document.body.style.padding = '0'
 // document.body.style.overflow = 'hidden';
 
-function App({ blogs }) {
+function App({ blogs, len }) {
     const [isCreateOpen, setIsCreateOpen] = React.useState(false)
     const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
 
@@ -17,7 +17,7 @@ function App({ blogs }) {
             border: '1px solid #000000'
         }}>
             <FirstRow />
-            <PrimeraFila />
+            <PrimeraFila len={len}/>
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
             {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} addMovie={addMovie} /> } 
             {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} blogs={blogs}/>}
@@ -42,8 +42,8 @@ function FirstRow() {
     )
 }
 
-function PrimeraFila() {
-
+function PrimeraFila({len}) {
+    
     // Ruta de la imagen
     const imageSource = "Seat.svg";
     
@@ -59,12 +59,10 @@ function PrimeraFila() {
 
         const handleMouseEnter = () => {
             setIsPopoverVisible(true)
-            console.log('open')
         }
     
         const handleMouseLeave = () => {
             setIsPopoverVisible(false)
-            console.log('close')
         }
         
         if (i % 8 == 0 && i != 0) {
@@ -74,9 +72,7 @@ function PrimeraFila() {
         imageElements.push(
             <div>
                 <img 
-                    key={i} 
                     src={imageSource} 
-                    alt={`${i}`} 
                     style={{ 
                         position: 'fixed',
                         top: topp +'px',
@@ -86,7 +82,7 @@ function PrimeraFila() {
                         margin: '0 0px', // Reducir el espacio entre las imágenes
                     }} 
                 />
-                <div onMouseOver={handleMouseEnter}
+                <div id = '{i}' onMouseOver={handleMouseEnter}
                 onMouseOut={handleMouseLeave} style={{
                     position: 'fixed',
                     height: '176px',
@@ -97,7 +93,8 @@ function PrimeraFila() {
                     zIndex: '1'
                 }}></div>
                     {isPopOverVisible && 
-                    (<Information handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} topp={topp} leftp={leftp}/>
+                    (<Information id={i} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} 
+                        topp={topp} leftp={leftp} len={len}/>
                 )}
             </div>
         )
@@ -219,7 +216,7 @@ async function obtainMovies(){
     
     // Renderizar el componente en el DOM
     ReactDOM.render(
-        <App blogs={blogs}/>,
+        <App blogs={blogs} len={blogs.length}/>,
         document.getElementById('root')
     )
 }
