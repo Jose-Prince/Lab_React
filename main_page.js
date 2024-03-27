@@ -17,7 +17,7 @@ function App({ blogs, len }) {
             border: '1px solid #000000'
         }}>
             <FirstRow />
-            <PrimeraFila len={len}/>
+            <PrimeraFila len={len} blogs={blogs}/>
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
             {isCreateOpen && <ModalCreate onClose={() => setIsCreateOpen(false)} blogs={blogs} addMovie={addMovie} /> } 
             {isDeleteOpen && <ModalDelete onClose={() => setIsDeleteOpen(false)} blogs={blogs} DeleteMovie={DeleteMovie}/>}
@@ -42,7 +42,7 @@ function FirstRow() {
     )
 }
 
-function PrimeraFila({len}) {
+function PrimeraFila({len, blogs}) {
     
     // Ruta de la imagen
     const imageSource = "Seat.svg";
@@ -82,7 +82,7 @@ function PrimeraFila({len}) {
                         margin: '0 0px', // Reducir el espacio entre las imágenes
                     }} 
                 />
-                <div id = '{i}' onMouseOver={handleMouseEnter}
+                <div id = {i} onMouseOver={handleMouseEnter}
                 onMouseOut={handleMouseLeave} style={{
                     position: 'fixed',
                     height: '176px',
@@ -94,7 +94,7 @@ function PrimeraFila({len}) {
                 }}></div>
                     {isPopOverVisible && 
                     (<Information id={i} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} 
-                        topp={topp} leftp={leftp} len={len}/>
+                        topp={topp} leftp={leftp} len={len} blogs={blogs}/>
                 )}
             </div>
         )

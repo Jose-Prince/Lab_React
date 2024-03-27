@@ -33,11 +33,11 @@ function ShowMovies({ movies, onClose, DeleteMovie }) {
     }
 
     function formSubmit(event) {
-        event.preventDefault();
-        const index = movies.findIndex(movie => movie.title === selectMovie);
-        if (index !== -1) {
-            DeleteMovie(index);
-        }
+        event.preventDefault()
+        const movie = movies.find(objeto => objeto.title === selectMovie)
+        console.log(movie)
+        DeleteMovie(movie.id)
+
         onClose(); // Cerrar el modal después de eliminar la película
     }
 

@@ -1,4 +1,4 @@
-function Information({ id, handleMouseEnter, handleMouseLeave, topp, leftp, len }) {
+function Information({ id, handleMouseEnter, handleMouseLeave, topp, leftp, len, blogs }) {
     if (id >= len) {
         return null;
     }
@@ -13,19 +13,21 @@ function Information({ id, handleMouseEnter, handleMouseLeave, topp, leftp, len 
                 left: leftp + 241 + 'px',
             }}
         >
-            <PopOver id={id} />
+            <PopOver id={id} blogs={blogs} />
         </div>
     );
 }
 
-function InfoContainer({id}) {
+function InfoContainer({id, blogs}) {
 
     const [blogContent, setBlogContent] = React.useState("")
 
+    
     React.useEffect(() => {
         async function fecthData() {
             try {
-                const content = await obtainMoviesContent(id)
+                const ids = blogs.map(element => element.id)
+                const content = await obtainMoviesContent(ids[id])
                 setBlogContent(content)
             } catch (error) {
                 console.error("Error fetching blog content:", error)
@@ -67,13 +69,13 @@ function Triangle(){
     )
 }
 
-function PopOver({id}) {
+function PopOver({id, blogs}) {
     return (
         <div style = {{
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <InfoContainer id={id} />
+            <InfoContainer id={id} blogs={blogs} />
             <Triangle />
         </div>
     )
