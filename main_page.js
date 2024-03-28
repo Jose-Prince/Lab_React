@@ -3,7 +3,7 @@ document.body.style.backgroundColor = '#000000'
 document.body.style.height = '99.8%'
 document.body.style.margin = '0'
 document.body.style.padding = '0'
-// document.body.style.overflow = 'hidden';
+document.body.style.overflow = 'hidden';
 
 function App({ blogs, len }) {
     const [isCreateOpen, setIsCreateOpen] = React.useState(false)
@@ -56,6 +56,12 @@ function PrimeraFila({len, blogs}) {
     // Generar elementos img dinámicamente usando un ciclo for
     for (var i = 0; i < 32; i++) {  
         const [isPopOverVisible, setIsPopoverVisible] = React.useState(false)
+        const [isModifyOpen, setIsModifyOpen] = React.useState(false)
+
+        const onClickModify = () => {
+            setIsModifyOpen(true)
+            console.log('abrir')
+        }
 
         const handleMouseEnter = () => {
             setIsPopoverVisible(true)
@@ -83,7 +89,8 @@ function PrimeraFila({len, blogs}) {
                     }} 
                 />
                 <div id = {i} onMouseOver={handleMouseEnter}
-                onMouseOut={handleMouseLeave} style={{
+                onMouseOut={handleMouseLeave} onClick={onClickModify}
+                style={{
                     position: 'fixed',
                     height: '176px',
                     width: '234px',
@@ -92,6 +99,9 @@ function PrimeraFila({len, blogs}) {
                     cursor: 'pointer',
                     zIndex: '1'
                 }}></div>
+                {
+                    isModifyOpen && <Modify blogs={blogs} id={i} onClose={() => setIsModifyOpen(false)}/>
+                }
                     {isPopOverVisible && 
                     (<Information id={i} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} 
                         topp={topp} leftp={leftp} len={len} blogs={blogs}/>
