@@ -182,20 +182,3 @@ function ModalOptions({ onClose, handleSubmit }) {
     )
 }
 
-
-//Async functions
-async function obtainMoviesLen(){
-    const data = await fetch('http://127.0.0.1:3000/posts',
-    {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    console.log('await', data)
-    const blogs = await data.json()
-    console.log(blogs)
-    
-    return blogs.length
-}
-
