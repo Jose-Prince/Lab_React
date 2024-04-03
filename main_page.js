@@ -6,16 +6,20 @@ document.body.style.padding = '0'
 document.body.style.overflow = 'hidden';
 
 function App({ blogs, len }) {
+
+    if (!Array.isArray(blogs)) {
+        throw new Error('Propiedad "blogs" debe ser un array.')
+    }
+
+    if (typeof len !== 'number') {
+        throw new Error('Propiedad "len" debe ser un número.')
+    }
+
     const [isCreateOpen, setIsCreateOpen] = React.useState(false)
     const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
 
     return (
-        <div style={{
-            height: '100%',
-            display: 'grid',
-            gridTemplateRows: '50% 47% 3%',
-            border: '1px solid #000000'
-        }}>
+        <div id='grid'>
             <FirstRow />
             <PrimeraFila len={len} blogs={blogs}/>
             <Buttons setIsCreateOpen={setIsCreateOpen} setIsDeleteOpen={setIsDeleteOpen}/>
@@ -30,19 +34,22 @@ obtainMovies()
 //Div flex
 function FirstRow() {
     return(
-        <div style={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-end'
-        }}>
+        <div class='position'>
             <Screen />
         </div>
     )
 }
 
 function PrimeraFila({len, blogs}) {
+
+
+    if (!Array.isArray(blogs)) {
+        throw new Error('Propiedad "blogs" debe ser un array.')
+    }
+
+    if (typeof len !== 'number') {
+        throw new Error('Propiedad "len" debe ser un número.')
+    }
     
     // Ruta de la imagen
     const imageSource = "Seat.svg";
@@ -123,30 +130,14 @@ function PrimeraFila({len, blogs}) {
 //Screen where video'll be shown
 function Screen() {
     return (
-       <div style={{
-            height: '90%',
-            width: '50%',
-            backgroundColor: 'white',
-            filter: 'drop-shadow(0 0 50mm rgb(365, 365, 365))'  //applies shadow
-       }}>
+       <div id='screen'>
        </div> 
     )
 }
 
 function Buttons({ setIsCreateOpen, setIsDeleteOpen }) {
     return(
-        <div style={{
-            position: 'relative',
-            height: '100%',
-            width: '99.9%',
-            gridRow: '3',
-            backgroundColor: 'black',
-            border: '1px solid #ffffff',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: 'white',
-        }}>
+        <div class='buttonsDesign'>
             <Create setIsCreateOpen={setIsCreateOpen}/> | <Delete setIsDeleteOpen={setIsDeleteOpen}/>
         </div>
     )

@@ -24,19 +24,7 @@ function Modify({blogs, id, onClose}) {
     }
 
     return (
-        <div style={{
-            position: 'fixed',
-            minHeight: '100px',
-            minWidth: '100px',
-            top: '25%',
-            left: '29%',
-            backgroundColor: 'white',
-            zIndex: '2',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '10px'
-            }}>
+        <div id='modifyDiv'>
             {blogContent.title}
             <Content content={blogContent.content} handleChange={handleChange}/>
             <ButtonsC onClose={onClose} blogContent={blogContent} movies={blogs}/>
@@ -44,17 +32,11 @@ function Modify({blogs, id, onClose}) {
     )
 }
 
-function Content({content, handleChange}) {
+function ContentC({content, handleChange}) {
     return (
         <textarea type='text' value={content}
             onChange={(event) => handleChange(event.target.value)}
-            style={{
-                resize: 'none',
-                height: '300px',
-                width: '760px',
-                fontSize: '15px',
-                margin: '10px'
-            }} />
+            class='contentArea'/>
     )
 }
 
@@ -67,19 +49,9 @@ function ButtonsC({onClose, blogContent, movies}) {
     }
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            width: '100%'
-        }}>
-            <button onClick={onClose} style={{
-                width: '30%',
-                fontSize: '15px'
-            }}>Cerrar</button>
-            <button onClick={handleSubmit} style={{
-                width: '30%',
-                fontSize: '15px'
-            }}>Submit</button>
+        <div class='buttonDisplay'>
+            <button onClick={onClose} class='buttons' >Cerrar</button>
+            <button onClick={handleSubmit} class='buttons'>Submit</button>
         </div>
     )
 }

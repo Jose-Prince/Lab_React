@@ -32,28 +32,8 @@ function ModalCreate({ onClose, addMovie, blogs }) {
     };
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: '2'
-        }}>
-            <div style={{
-                backgroundColor: 'white',
-                padding: '20px',
-                borderRadius: '5px',
-                boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column'
-            }}>
+        <div id='shadow'>
+            <div class='contentDiv'>
                 <h2>Grabando película</h2>
                 <Name value={title} handleChange={setTitle}/>
                 <Trailer value={trailer} handleChange={setTrailer}/>
@@ -67,23 +47,11 @@ function ModalCreate({ onClose, addMovie, blogs }) {
 
 function Name({ value, handleChange }) {
     return (
-        <div id='N' style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center'
-        }}>
-            <p style={{
-                margin: '50px'
-            }}>Título: </p>
+        <div id='N' class='elementAlign'>
+            <p class='textIdentifier'>Título: </p>
             <input type='text' value={value} 
             onChange={(event) => handleChange(event.target.value)}
-            style={{
-                resize: 'none',
-                height: '30px',
-                width: '700px',
-                fontSize: '15px',
-                rows: '1',
-            }} maxLength='255'
+            class='inputText' maxLength='255'
             placeholder='Título...'/>
         </div>
     )
@@ -92,23 +60,11 @@ function Name({ value, handleChange }) {
 function Trailer({ value, handleChange }) {
 
     return (
-        <div id='T' style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center'
-        }}>
-            <p style={{
-                margin: '50px'
-            }}>Trailer: </p>
+        <div id='T' class='elementAlign'>
+            <p class='textIdentifier'>Trailer: </p>
             <input type='text' value={value}
             onChange={(event) => handleChange(event.target.value)}
-            style={{
-                resize: 'none',
-                height: '30px',
-                width: '700px',
-                fontSize: '15px',
-                rows: '1',
-            }} maxLength='255'
+            class='inputText' maxLength='255'
             placeholder='Trailer...'/>
         </div>
     )
@@ -117,23 +73,11 @@ function Trailer({ value, handleChange }) {
 function Image({ value, handleChange }) {
 
     return (
-        <div id='I' style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center'
-        }}>
-            <p style={{
-                margin: '50px'
-            }}>Imagen: </p>
+        <div id='I' class='elementAlign'>
+            <p class='textIdentifier'>Imagen: </p>
             <input type='text' value={value}
             onChange={(event) => handleChange(event.target.value)}
-            style={{
-                resize: 'none',
-                height: '30px',
-                width: '700px',
-                fontSize: '15px',
-                rows: '1',
-            }} maxLength='255'
+            class='inputText' maxLength='255'
             placeholder='Imagen representativa...'/>
         </div>
     )
@@ -142,21 +86,11 @@ function Image({ value, handleChange }) {
 function Content({ value, handleChange }) {
 
     return (
-        <div id='C' style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            flexDirection: 'column'
-        }}>
+        <div id='C' class='elementsDisplay'>
             <p>Contenido: </p>
             <textarea type='text' value={value}
             onChange={(event) => handleChange(event.target.value)}
-            style={{
-                resize: 'none',
-                height: '300px',
-                width: '760px',
-                fontSize: '15px',
-            }} 
+            class='contentArea'
             placeholder='Contenido de la película...'/>
         </div>
     )
@@ -164,20 +98,9 @@ function Content({ value, handleChange }) {
 
 function ModalOptions({ onClose, handleSubmit }) {
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            width: '100%',
-            margin: '15px'
-        }}>
-            <button onClick={onClose} style={{
-                width: '30%',
-                fontSize: '20px'
-            }}>Cerrar</button>
-            <button onClick={handleSubmit} style={{
-                width: '30%',
-                fontSize: '20px'
-            }}>Grabar</button>
+        <div class='buttonDisplay'>
+            <button onClick={onClose} class='buttons'>Cerrar</button>
+            <button onClick={handleSubmit} class='buttons'>Grabar</button>
         </div>
     )
 }

@@ -38,17 +38,7 @@ function InfoContainer({id, blogs}) {
 
     return (
         <div
-            style={{
-                height: '176px',
-                width: '234px',
-                cursor: 'pointer',
-                zIndex: '1',
-                backgroundColor: 'white', // Color del popover
-                color: 'black', // Color del texto del popover
-                textAlign: 'center', // Alineación del texto del popover
-                paddingTop: '10px', // Espacio superior dentro del popover
-                borderRadius: '5px', 
-            }}
+            id='containerPop'
         >
             <b>{blogContent.title}</b> <br></br><br></br>
             {blogContent.content}
@@ -58,23 +48,13 @@ function InfoContainer({id, blogs}) {
 
 function Triangle(){
     return (
-        <div style={{
-            width: '0px',
-            height: '0px',
-            borderStyle: 'solid',
-            borderWidth: '25px 117px 0 117px',
-            borderColor: 'white transparent transparent transparent',
-            zIndex: '1'
-        }}></div>
+        <div id='downTriangle'></div>
     )
 }
 
 function PopOver({id, blogs}) {
     return (
-        <div style = {{
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
+        <div class='elementsDisplay'>
             <InfoContainer id={id} blogs={blogs} />
             <Triangle />
         </div>

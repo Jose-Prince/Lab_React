@@ -1,23 +1,7 @@
 function ModalDelete({ onClose, blogs , DeleteMovie}) {
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semitransparente
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: '2'
-        }}>
-            <div style={{
-                backgroundColor: 'white',
-                padding: '20px',
-                borderRadius: '5px',
-                boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)'
-            }}>
+        <div id='shadow'>
+            <div id='deleteDiv'>
                 <h2>Escoja la película a eliminar</h2>
                 <ShowMovies movies={blogs} onClose={onClose} DeleteMovie={DeleteMovie}/>
             </div>
@@ -52,18 +36,9 @@ function ShowMovies({ movies, onClose, DeleteMovie }) {
     return (
         <form onSubmit={formSubmit}>
             {movieElements}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-evenly'
-            }}>
-                <button onClick={onClose} style={{
-                    width: '30%',
-                    fontSize: '15px'
-                }}>Cerrar</button>
-                <button type='submit' style={{
-                    width: '30%',
-                    fontSize: '15px'
-                }}>Submit</button>
+            <div class='buttonDisplay'>
+                <button onClick={onClose} class='buttons'>Cerrar</button>
+                <button type='submit' class='buttons'>Submit</button>
             </div>
         </form>
     );
